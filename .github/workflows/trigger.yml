@@ -1,0 +1,45 @@
+name: Run Bilyoner Channel Fetcher
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+  schedule:
+    # Örnek: her gün 12:00 UTC'de çalıştır
+    - cron: '0 3 * * *'
+
+jobs:
+  fetch-streams:
+    runs-on: ubuntu-latest
+    env:
+      API_URL: https://api.bilyonersport.com/channel/
+      # API key secret üzerinden okunacak
+      API_KEY: ${{ secrets.BILYONER_API_KEY }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt || pip install requests
+
+      - name: Run fetch script
+        # vars: script adı fetch_streams.py (repo içinde yer almalı)
+        run: |
+          python fetch_streams.py > fetch_output.json
+        # Eğer API_KEY eksikse hata ver
+        env:
+          BILYONER_API_KEY: ${{ secrets.BILYONER_API_KEY }}
+
+      - name: Upload output artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fetch-output
+          path: fetch_output.json
