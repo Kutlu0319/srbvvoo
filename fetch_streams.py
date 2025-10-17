@@ -3,7 +3,7 @@ import json
 import requests
 
 API_URL = os.getenv("API_URL", "https://api.bilyonersport.com/channel/")
-API_KEY = os.getenv("BILYONER_API_KEY")
+API_KEY = os.getenv("eyJ1c2VySWQiOiJhZG1pbiJ9.cGGCvhLTzbal5oMubTkExL_8I9mJoLnM8mTR93O4as86P9OE8n2WaVFyr3UoEwrf5F5IqpXcjE2LPUmXTAR06w")
 
 if not API_KEY:
     raise EnvironmentError("BILYONER_API_KEY environment variable is not set.")
@@ -85,3 +85,4 @@ with open("playlist.m3u", "w", encoding="utf-8") as f:
     f.write("\n".join(m3u_lines))
 
 print("✅ fetch_output.json ve playlist.m3u oluşturuldu.")
+
