@@ -1,4 +1,5 @@
 import os
+import json
 import requests
 
 API_URL = os.getenv("API_URL", "https://api.bilyonersport.com/channel/")
@@ -40,6 +41,7 @@ streams = [
     {"streaming_name": "EURO SPORT 2", "slug-code": "n43d438d"}
 ]
 
+results = {}
 m3u_lines = ['#EXTM3U']
 
 for stream in streams:
@@ -52,22 +54,34 @@ for stream in streams:
         response.raise_for_status()
         data = response.json()
 
-        # Stream URL nerede? Tahmini alan: data["stream_url"] veya benzeri.
-        # BURAYI ihtiyaca göre güncelle!
+        # Değişken ismi API'den alınan yanıta göre güncellenebilir!
         stream_url = data.get("stream_url") or data.get("url") or data.get("link")
 
         if not stream_url:
-            print(f"⚠️  {name} için stream URL bulunamadı.")
+            print(f"⚠️  {name}: Stream URL bulunamadı.")
+            results[slug] = {"name": name, "error": "Stream URL not found"}
             continue
 
+        # JSON çıktıya ekle
+        results[slug] = {
+            "name": name,
+            "url": stream_url
+        }
+
+        # M3U satırı oluştur
         m3u_lines.append(f'#EXTINF:-1 tvg-name="{name}" group-title="Sports",{name}')
         m3u_lines.append(stream_url)
 
     except Exception as e:
-        print(f"❌ {name} hata: {e}")
+        print(f"❌ {name} için hata: {e}")
+        results[slug] = {"name": name, "error": str(e)}
 
-# Dosyaya yaz
+# JSON çıktısını yaz
+with open("fetch_output.json", "w", encoding="utf-8") as f:
+    json.dump(results, f, indent=2, ensure_ascii=False)
+
+# M3U dosyasını yaz
 with open("playlist.m3u", "w", encoding="utf-8") as f:
     f.write("\n".join(m3u_lines))
 
-print("\n✅ playlist.m3u oluşturuldu.")
+print("✅ fetch_output.json ve playlist.m3u oluşturuldu.")
