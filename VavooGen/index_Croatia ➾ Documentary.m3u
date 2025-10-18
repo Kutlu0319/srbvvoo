@@ -41,13 +41,6 @@ https://vavoo.to/play/842699859/index.m3u8
 #KODIPROP:http-referrer=https://vavoo.to/
 #EXTHTTP:{"User-Agent":"VAVOO/1.0","Referer":"https://vavoo.to/"}
 https://vavoo.to/play/3346783972/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="HISTORY 2 (6)" tvg-logo="" group-title="Croatia ➾ Documentary" http-user-agent="VAVOO/1.0" http-referrer="https://vavoo.to/",HISTORY 2 (6)
-#EXTVLCOPT:http-user-agent=VAVOO/1.0
-#EXTVLCOPT:http-referrer=https://vavoo.to/
-#KODIPROP:http-user-agent=VAVOO/1.0
-#KODIPROP:http-referrer=https://vavoo.to/
-#EXTHTTP:{"User-Agent":"VAVOO/1.0","Referer":"https://vavoo.to/"}
-https://vavoo.to/play/2414803185/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="INVESTIGATION DISCOVERY (6)" tvg-logo="" group-title="Croatia ➾ Documentary" http-user-agent="VAVOO/1.0" http-referrer="https://vavoo.to/",INVESTIGATION DISCOVERY (6)
 #EXTVLCOPT:http-user-agent=VAVOO/1.0
 #EXTVLCOPT:http-referrer=https://vavoo.to/
