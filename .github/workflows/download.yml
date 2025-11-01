@@ -1,0 +1,33 @@
+name: Download m3u8
+
+on:
+  workflow_dispatch:
+    inputs:
+      stream_id:
+        description: 'Stream ID'
+        required: true
+
+jobs:
+  download-m3u8:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Download m3u8
+        run: python download_m3u8.py <<< "${{ github.event.inputs.stream_id }}"
+
+      - name: Upload m3u8 artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: stream-m3u8
+          path: "*.m3u8"
