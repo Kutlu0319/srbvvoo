@@ -1,5 +1,6 @@
 import requests
 import re
+import os
 
 def download_m3u8(streamID):
     target_url = f"https://popcdn.day/on.php?stream={streamID}"
@@ -35,7 +36,7 @@ def download_m3u8(streamID):
     print(f"{filename} başarıyla indirildi!")
 
 if __name__ == "__main__":
-    streamID = input("Lütfen stream ID'sini girin: ").strip()
+    streamID = os.getenv("STREAM_ID", "").strip()
     if not streamID:
         print("ID girilmedi. Çıkılıyor...")
     else:
